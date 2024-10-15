@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const plm = require("passport-local-mongoose");
+const isLoggedIn = require("../middleware/Auth.middleware")
+
 
 mongoose.connect("mongodb://localhost:27017/instainstagram");
 

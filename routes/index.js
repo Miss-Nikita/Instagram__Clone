@@ -8,6 +8,8 @@ const storyModel = require("./story");
 passport.use(new localStrategy(userModel.authenticate()));
 const upload = require("./multer");
 const utils = require("../utils/utils");
+// const isLoggedIn = require("../middleware/Auth.middleware")
+
 
 
 // GET
@@ -235,15 +237,12 @@ router.get("/logout", function (req, res) {
   });
 });
 
-function isLoggedIn(req, res, next) {
+function  isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   } else {
     res.redirect("/login");
   }
 }
-
-
-
 
 module.exports = router;

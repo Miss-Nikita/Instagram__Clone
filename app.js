@@ -1,8 +1,12 @@
+require("dotenv").config({path:"./.env"})
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+
+const passport = require("passport");
+const session = require("express-session");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -18,6 +22,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// passport and session config
+app.use(
+session({
+  secret: process.env.EXPRESS_SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+})
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+// passport.serializeUser(UserSchema.serializeUser());
+// passport.deserializeUser(UserSchema.deserializeUser());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
